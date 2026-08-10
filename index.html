@@ -85,15 +85,20 @@
     position:relative;min-height:92vh;display:flex;align-items:flex-end;padding:0 4% 8vh;
   }
   .hero-bg{
-    position:absolute;inset:0;z-index:-1;
+    position:absolute;inset:0;z-index:-2;
     background:
       radial-gradient(ellipse at 70% 20%, rgba(229,9,20,.28), transparent 55%),
       radial-gradient(ellipse at 20% 80%, rgba(255,107,129,.14), transparent 60%),
       linear-gradient(160deg,#1a0b0d 0%, #141414 55%, #101010 100%);
+    overflow:hidden;
+  }
+  .hero-vid {
+    position:absolute;inset:-10%;width:120%;height:120%;z-index:-1;
+    pointer-events:none;opacity:0.65;
   }
   .hero-bg::after{
-    content:'';position:absolute;inset:0;
-    background:linear-gradient(to top, var(--bg) 8%, transparent 55%), linear-gradient(to bottom, rgba(0,0,0,.35), transparent 30%);
+    content:'';position:absolute;inset:0;z-index:0;
+    background:linear-gradient(to top, var(--bg) 8%, transparent 55%), linear-gradient(to right, var(--bg) 2%, transparent 40%), linear-gradient(to bottom, rgba(0,0,0,.35), transparent 30%);
   }
   .hero-inner{max-width:620px;position:relative}
   .hero-tag{
@@ -318,7 +323,9 @@
 
 <!-- ============ HERO ============ -->
 <section class="hero">
-  <div class="hero-bg"></div>
+  <div class="hero-bg">
+    <iframe class="hero-vid" src="https://www.youtube-nocookie.com/embed/N3YQx3AIT_k?autoplay=1&mute=1&controls=0&loop=1&playsinline=1&playlist=N3YQx3AIT_k" allow="autoplay; encrypted-media" frameborder="0"></iframe>
+  </div>
   <div class="hero-inner">
     <div class="hero-tag"><span class="pulse"></span> CINELOVE ORIGINAL — TOP 1 DI HATI KAMU</div>
     <h1>CINTA <span class="rose">KITA</span><br><span class="red">THE SERIES</span></h1>
