@@ -639,8 +639,7 @@
   }
 
   function typeLine(line, cb){
-    typeToken++;              /* cancel any previous run */
-    var myToken = typeToken;
+    var myToken = typeToken;  /* capture current token; do NOT increment — updateSub owns it */
     typing = true;
     var i = 0;
     subText.textContent = '';
