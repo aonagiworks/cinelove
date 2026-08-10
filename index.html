@@ -261,6 +261,20 @@
     *{animation-duration:.001s !important;transition-duration:.001s !important}
   }
   .focusable:focus-visible{outline:2px solid var(--rose);outline-offset:2px}
+
+  .thumb {
+    background-size: cover !important;
+    background-position: center !important;
+  }
+  .player-bg iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    pointer-events: none;
+    opacity: 0.55;
+    transform: scale(1.1);
+  }
+
 </style>
 </head>
 <body>
@@ -330,17 +344,17 @@
     <div class="row-head"><h3>Lanjut Nonton Untuk <b style="color:var(--rose)">Chanteii</b></h3><span class="see">Lihat Semua</span></div>
     <div class="track">
       <div class="card focusable" tabindex="0" data-play="Episode 4: Ketemu Lagi">
-        <div class="thumb" style="background:linear-gradient(135deg,#3d0a0e,#e50914)">💌<span class="noise"></span><span class="ribbon">E4 · 08:32</span><div class="corner"><span class="badge">Lanjut</span></div></div>
+        <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=600&auto=format&fit=crop')">💌<span class="noise"></span><span class="ribbon">E4 · 08:32</span><div class="corner"><span class="badge">Lanjut</span></div></div>
         <h4>Chat Malam Minggu</h4><div class="sub">S01 · Episode 4</div>
         <div class="progress"><i style="width:72%"></i></div>
       </div>
       <div class="card focusable" tabindex="0" data-play="Film: 3 Tahun Bersama">
-        <div class="thumb" style="background:linear-gradient(135deg,#1e1b3a,#8b5cf6)">🎬<span class="noise"></span><span class="ribbon">1j 24m</span><div class="corner"><span class="badge muted">Film</span></div></div>
+        <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=600&auto=format&fit=crop')">🎬<span class="noise"></span><span class="ribbon">1j 24m</span><div class="corner"><span class="badge muted">Film</span></div></div>
         <h4>Kita dan Waktu</h4><div class="sub">Film dokumenter cinta</div>
         <div class="progress"><i style="width:45%"></i></div>
       </div>
       <div class="card focusable" tabindex="0" data-play="Specials: Jalan-Jalan">
-        <div class="thumb" style="background:linear-gradient(135deg,#0f2b1d,#10b981)">🌴<span class="noise"></span><span class="ribbon">24m</span><div class="corner"><span class="badge">Baru</span></div></div>
+        <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=600&auto=format&fit=crop')">🌴<span class="noise"></span><span class="ribbon">24m</span><div class="corner"><span class="badge">Baru</span></div></div>
         <h4>Jalan-Jalan &amp; Jajan</h4><div class="sub">Spesial liburan kita</div>
         <div class="progress"><i style="width:12%"></i></div>
       </div>
@@ -351,19 +365,19 @@
     <div class="row-head"><h3>Trending Sekarang</h3><span class="see">Lihat Semua</span></div>
     <div class="track">
       <div class="card t10 focusable" tabindex="0" data-play="Top 10: 1">
-        <div class="thumb" style="background:linear-gradient(135deg,#33090c,#ff2d3b)">😳<span class="noise"></span></div>
+        <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=600&auto=format&fit=crop')">😳<span class="noise"></span></div>
       </div>
       <div class="card t10 focusable" tabindex="0" data-play="Top 10: 2">
-        <div class="thumb" style="background:linear-gradient(135deg,#2b0f2e,#d946ef)">😭<span class="noise"></span></div>
+        <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=600&auto=format&fit=crop')">😭<span class="noise"></span></div>
       </div>
       <div class="card t10 focusable" tabindex="0" data-play="Top 10: 3">
-        <div class="thumb" style="background:linear-gradient(135deg,#10233e,#2563eb)">🥰<span class="noise"></span></div>
+        <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=600&auto=format&fit=crop')">🥰<span class="noise"></span></div>
       </div>
       <div class="card t10 focusable" tabindex="0" data-play="Top 10: 4">
-        <div class="thumb" style="background:linear-gradient(135deg,#1f1710,#f59e0b)">☕<span class="noise"></span></div>
+        <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=600&auto=format&fit=crop')">☕<span class="noise"></span></div>
       </div>
       <div class="card t10 focusable" tabindex="0" data-play="Top 10: 5">
-        <div class="thumb" style="background:linear-gradient(135deg,#141414,#525252)">🖤<span class="noise"></span></div>
+        <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1494774157365-9e04c6720e47?q=80&w=600&auto=format&fit=crop')">🖤<span class="noise"></span></div>
       </div>
     </div>
   </div>
@@ -372,23 +386,23 @@
     <div class="row-head"><h3>Karena Kamu Nonton <b style="color:var(--rose)">"Chat Malam Minggu"</b></h3><span class="see">Lihat Semua</span></div>
     <div class="track">
       <div class="card focusable" tabindex="0" data-play="Rekomendasi: Pelukan">
-        <div class="thumb" style="background:linear-gradient(135deg,#2d0f18,#f43f5e)">🤗<span class="noise"></span><span class="ribbon">S01 · E5</span></div>
+        <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80&w=600&auto=format&fit=crop')">🤗<span class="noise"></span><span class="ribbon">S01 · E5</span></div>
         <h4>Pelukan di Tengah Hujan</h4><div class="sub">Komedi romantis</div>
       </div>
       <div class="card focusable" tabindex="0" data-play="Rekomendasi: Mie">
-        <div class="thumb" style="background:linear-gradient(135deg,#261a08,#eab308)">🍜<span class="noise"></span><span class="ribbon">S01 · E7</span></div>
+        <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1569718212165-3a8278d5f624?q=80&w=600&auto=format&fit=crop')">🍜<span class="noise"></span><span class="ribbon">S01 · E7</span></div>
         <h4>Mie Gacoan Kita Berdua</h4><div class="sub">Fakta ilmiah (drama)</div>
       </div>
       <div class="card focusable" tabindex="0" data-play="Rekomendasi: Rumah">
-        <div class="thumb" style="background:linear-gradient(135deg,#14213d,#6ee7b7)">🏡<span class="noise"></span><span class="ribbon">S02 · E1</span></div>
+        <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=600&auto=format&fit=crop')">🏡<span class="noise"></span><span class="ribbon">S02 · E1</span></div>
         <h4>Rumah Impian (Masih Mimpi)</h4><div class="sub">Realita + fantasi</div>
       </div>
       <div class="card focusable" tabindex="0" data-play="Rekomendasi: Cemburu">
-        <div class="thumb" style="background:linear-gradient(135deg,#1a1033,#a855f7)">😤<span class="noise"></span><span class="ribbon">S01 · E9</span></div>
+        <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=600&auto=format&fit=crop')">😤<span class="noise"></span><span class="ribbon">S01 · E9</span></div>
         <h4>Cemburu Buta (Aku)</h4><div class="sub">Thriller psikologis</div>
       </div>
       <div class="card focusable" tabindex="0" data-play="Rekomendasi: Maaf">
-        <div class="thumb" style="background:linear-gradient(135deg,#0c2b22,#34d399)">🤝<span class="noise"></span><span class="ribbon">S01 · E10</span></div>
+        <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?q=80&w=600&auto=format&fit=crop')">🤝<span class="noise"></span><span class="ribbon">S01 · E10</span></div>
         <h4>Maaf dan Pelukan Panjang</h4><div class="sub">Season finale</div>
       </div>
     </div>
@@ -398,23 +412,23 @@
     <div class="row-head"><h3>Serial Orisinal CINELOVE⁺</h3><span class="see">Lihat Semua</span></div>
     <div class="track">
       <div class="card focusable" tabindex="0" data-play="Original: Good Morning">
-        <div class="thumb" style="background:linear-gradient(135deg,#3a0d1e,#fb7185)">🌅<span class="noise"></span><span class="ribbon">Setiap Hari</span><div class="corner"><span class="badge">Baru</span></div></div>
+        <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?q=80&w=600&auto=format&fit=crop')">🌅<span class="noise"></span><span class="ribbon">Setiap Hari</span><div class="corner"><span class="badge">Baru</span></div></div>
         <h4>Good Morning Message</h4><div class="sub">Serial rutin, 365 episode</div>
       </div>
       <div class="card focusable" tabindex="0" data-play="Original: Spotify">
-        <div class="thumb" style="background:linear-gradient(135deg,#0a2a22,#22d3ee)">🎧<span class="noise"></span><span class="ribbon">Playlist</span></div>
+        <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=600&auto=format&fit=crop')">🎧<span class="noise"></span><span class="ribbon">Playlist</span></div>
         <h4>Lagu Pengantar Tidur</h4><div class="sub">Dibawakan Spotify</div>
       </div>
       <div class="card focusable" tabindex="0" data-play="Original: Kucing">
-        <div class="thumb" style="background:linear-gradient(135deg,#212121,#facc15)">🐱<span class="noise"></span><span class="ribbon">HD</span></div>
+        <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=600&auto=format&fit=crop')">🐱<span class="noise"></span><span class="ribbon">HD</span></div>
         <h4>Cowo &amp; Kucing</h4><div class="sub">Dokumenter alam liar</div>
       </div>
       <div class="card focusable" tabindex="0" data-play="Original: Kontes">
-        <div class="thumb" style="background:linear-gradient(135deg,#2c1230,#e879f9)">🏆<span class="noise"></span><span class="ribbon">S01</span></div>
+        <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1578269174936-2709b6aeb913?q=80&w=600&auto=format&fit=crop')">🏆<span class="noise"></span><span class="ribbon">S01</span></div>
         <h4>Kontes Cinta Sejati</h4><div class="sub">Aku menang, kamu jurinya</div>
       </div>
       <div class="card focusable" tabindex="0" data-play="Original: Makan">
-        <div class="thumb" style="background:linear-gradient(135deg,#331c08,#fb923c)">🍽️<span class="noise"></span><span class="ribbon">S03</span></div>
+        <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=600&auto=format&fit=crop')">🍽️<span class="noise"></span><span class="ribbon">S03</span></div>
         <h4>Makanan Kesukaanmu</h4><div class="sub">Cooking show, chef-nya aku</div>
       </div>
     </div>
@@ -461,7 +475,10 @@
   </div>
 
   <div class="player-stage">
-    <div class="player-bg"><span class="glow">💖</span></div>
+    <div class="player-bg" id="playerBg">
+      <iframe id="ytPlayer" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      <span class="glow" id="playerGlow" style="display:none">💖</span>
+    </div>
     <div class="stage-inner">
       <div class="ep-tag" id="epTag">S01 · E01 — "Awal Kita"</div>
       <h2 id="playerTitle">CINTA KITA</h2>
@@ -506,52 +523,52 @@
   var toast = document.getElementById('toast');
 
   var EPISODES = [
-    {title:'Awal Kita', lines:[
+    {title:'Awal Kita', ytId:'3BSniYbxa4k', lines:[
       'Banyak orang bilang, cinta itu rumit.',
       'Tapi aku? Aku cuma butuh satu alasan: kamu.',
       'Dari dulu sampai sekarang, tombol replay-nya gak pernah mati.'
     ]},
-    {title:'Chat Pertama', lines:[
+    {title:'Chat Pertama', ytId:'qx-Ap8wYM4k', lines:[
       'Semua butuh kalimat pembuka.',
       'Beruntungnya aku, kalimat pembukaku dijawab sama yang paling lucu dan paling baik hati.',
       'Sejak itu, chat kita gak pernah ada ujungnya.'
     ]},
-    {title:'Kamu Lucu', lines:[
+    {title:'Kamu Lucu', ytId:'TlMZs37d6-s', lines:[
       'Aku sudah riset panjang. Sampelnya ratusan hari.',
       'Kesimpulannya tetap: kamu lucu.',
       'Dan riset ini bakalan jalan terus, sampai bosan — yang gak akan pernah terjadi.'
     ]},
-    {title:'Jatuh Cinta', lines:[
+    {title:'Jatuh Cinta', ytId:'MaFIeVgUy5w', lines:[
       'Kamu tau plot twist paling ngena?',
       'Bukan pas aku sadar aku sayang kamu.',
       'Tapi pas aku sadar, kamu juga milih aku. Di situ aku menang semua.'
     ]},
-    {title:'Hari-Hari Kita', lines:[
+    {title:'Hari-Hari Kita', ytId:'zQpPeI-2c6k', lines:[
       'Episode favorit penonton: hari biasa.',
       'Sarapan, chat iseng, ketawa receh, tiba-tiba udah malam.',
       'Rasanya biasa aja. Tapi gak ada yang mau ganti dengan yang lain.'
     ]},
-    {title:'Kita vs Masalah', lines:[
+    {title:'Kita vs Masalah', ytId:'ieEsCShC9PE', lines:[
       'Semua cerita butuh konflik biar menarik.',
       'Tapi tim kita solid: aku, kamu, dan komunikasi.',
       'Jadi apapun episode buruknya, kita selalu lanjut nonton bareng.'
     ]},
-    {title:'Pelukan', lines:[
+    {title:'Pelukan', ytId:'g1JAILio6-s', lines:[
       'Obat segala episode buruk: satu pelukan.',
       'Fakta ilmiah, udah aku verifikasi sendiri.',
       'Side effect: pengen peluk terus.'
     ]},
-    {title:'Masa Depan', lines:[
+    {title:'Masa Depan', ytId:'VyNMRCV3XnU', lines:[
       'Spoiler alert: kita bahagia.',
       'Rumah kecil, kopi sore, dan kamu di sebelahku.',
       'Rating penonton: belum ada yang sepadan.'
     ]},
-    {title:'Selamanya', lines:[
+    {title:'Selamanya', ytId:'k4ySalOm1LI', lines:[
       'Aplikasi streaming punya tombol berhenti.',
       'Aku sama kamu enggak.',
       'Endless mode: on. Selamanya.'
     ]},
-    {title:'Kamu & Aku', lines:[
+    {title:'Kamu & Aku', ytId:'UwBX930EuuE', lines:[
       'Ini season finale. Tapi ceritanya belum tamat.',
       'Karena aku mau lanjut nonton sama kamu, sampai episode terakhir hidupku.',
       'Thanks for watching. Aku sayang kamu. 🌸'
@@ -632,6 +649,10 @@
   function updateEp(reset){
     var ep = EPISODES[epIdx];
     epTag.textContent = 'S01 · E'+String(epIdx+1).padStart(2,'0')+' — "'+ep.title+'"';
+    var ytPlayer = document.getElementById('ytPlayer');
+    if (ytPlayer && ep.ytId) {
+      ytPlayer.src = 'https://www.youtube-nocookie.com/embed/' + ep.ytId + '?autoplay=1&mute=0&controls=0&loop=1&playsinline=1&playlist=' + ep.ytId;
+    }
     document.querySelectorAll('.ep-item').forEach(function(it){
       it.classList.toggle('now', parseInt(it.getAttribute('data-ep'),10)===epIdx);
     });
