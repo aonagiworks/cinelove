@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CINELOVE⁺ — Streaming Cinta Kita</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#141414;
+    --bg2:#181818;
+    --card:#1c1c1c;
+    --red:#E50914;
+    --red2:#b20710;
+    --rose:#ff6b81;
+    --cream:#e5e5e5;
+    --gray:#808080;
+    --text:#fff;
+    --font-display:'Archivo Black', sans-serif;
+    --font-body:'Inter', sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{background:var(--bg);color:var(--text);font-family:var(--font-body);overflow-x:hidden}
+  ::-webkit-scrollbar{height:8px;width:8px}
+  ::-webkit-scrollbar-track{background:var(--bg)}
+  ::-webkit-scrollbar-thumb{background:#333;border-radius:4px}
+  ::selection{background:var(--red);color:#fff}
+  a{color:inherit;text-decoration:none}
+
+  /* ============ PROFILE PICKER ============ */
+  #profiles{
+    position:fixed;inset:0;z-index:100;background:var(--bg);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;
+    transition:opacity .5s, transform .5s;
+  }
+  #profiles.hidden{opacity:0;transform:scale(1.06);pointer-events:none}
+  #profiles .brand{font-family:var(--font-display);font-size:clamp(28px,5vw,44px);letter-spacing:2px;color:var(--red);text-transform:uppercase}
+  #profiles .brand span{color:var(--rose)}
+  #profiles h2{font-size:clamp(18px,3vw,24px);font-weight:500;color:var(--text)}
+  .profile-row{display:flex;gap:clamp(20px,5vw,48px);flex-wrap:wrap;justify-content:center;padding:0 20px}
+  .profile-card{
+    display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;
+    opacity:.7;transition:opacity .2s, transform .2s;
+  }
+  .profile-card:hover{opacity:1;transform:translateY(-4px)}
+  .profile-avatar{
+    width:clamp(80px,14vw,120px);height:clamp(80px,14vw,120px);border-radius:6px;
+    display:flex;align-items:center;justify-content:center;font-size:clamp(30px,5vw,48px);
+    border:2px solid transparent;transition:border-color .2s;
+  }
+  .profile-card:hover .profile-avatar{border-color:var(--red)}
+  .profile-card p{font-size:clamp(13px,2vw,17px);color:var(--gray)}
+  #profiles .edit{font-size:12px;color:var(--gray);letter-spacing:1px}
+
+  /* ============ NAV ============ */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    display:flex;align-items:center;gap:22px;padding:14px 4%;
+    background:linear-gradient(to bottom, rgba(0,0,0,.85), transparent);
+    transition:background .3s;
+  }
+  header.solid{background:#141414;border-bottom:1px solid #262626}
+  .logo{display:flex;align-items:center;gap:8px;cursor:pointer;flex-shrink:0}
+  .logo .mark{
+    width:38px;height:38px;border-radius:10px;background:var(--red);
+    display:flex;align-items:center;justify-content:center;font-size:18px;
+    box-shadow:0 0 20px rgba(229,9,20,.5);
+  }
+  .logo .word{font-family:var(--font-display);font-size:20px;letter-spacing:1px;text-transform:uppercase}
+  .logo .word small{color:var(--rose)}
+  nav.tabs{display:flex;gap:18px;align-items:center}
+  nav.tabs a{font-size:13.5px;color:var(--gray);transition:color .2s;white-space:nowrap}
+  nav.tabs a:hover, nav.tabs a.active{color:#fff;font-weight:600}
+  .nav-right{margin-left:auto;display:flex;align-items:center;gap:18px}
+  .nav-right .icon{cursor:pointer;opacity:.9;transition:opacity .2s;display:flex}
+  .nav-right .icon:hover{opacity:1}
+  .mini-ava{
+    width:32px;height:32px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;
+  }
+
+  /* ============ HERO ============ */
+  .hero{
+    position:relative;min-height:92vh;display:flex;align-items:flex-end;padding:0 4% 8vh;
+  }
+  .hero-bg{
+    position:absolute;inset:0;z-index:-1;
+    background:
+      radial-gradient(ellipse at 70% 20%, rgba(229,9,20,.28), transparent 55%),
+      radial-gradient(ellipse at 20% 80%, rgba(255,107,129,.14), transparent 60%),
+      linear-gradient(160deg,#1a0b0d 0%, #141414 55%, #101010 100%);
+  }
+  .hero-bg::after{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(to top, var(--bg) 8%, transparent 55%), linear-gradient(to bottom, rgba(0,0,0,.35), transparent 30%);
+  }
+  .hero-inner{max-width:620px;position:relative}
+  .hero-tag{
+    display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--rose);
+    letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;
+  }
+  .hero-tag .pulse{width:8px;height:8px;border-radius:50%;background:var(--red);animation:pulse 1.6s infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(229,9,20,.7)}50%{box-shadow:0 0 0 8px rgba(229,9,20,0)}}
+  .hero h1{
+    font-family:var(--font-display);font-size:clamp(40px,8vw,84px);line-height:.95;
+    text-transform:uppercase;letter-spacing:-1px;margin:6px 0 18px;
+  }
+  .hero h1 .red{color:var(--red);-webkit-text-stroke:0 transparent;text-shadow:0 0 40px rgba(229,9,20,.6)}
+  .hero h1 .rose{color:var(--rose)}
+  .hero .meta{display:flex;gap:10px;align-items:center;font-size:13px;color:var(--cream);margin-bottom:12px;flex-wrap:wrap}
+  .badge{background:var(--red);color:#fff;font-weight:700;padding:2px 8px;border-radius:3px;font-size:11px}
+  .badge.muted{background:#333;color:#ddd}
+  .hero .desc{font-size:clamp(14px,2vw,17px);color:#ccc;line-height:1.6;margin-bottom:22px;max-width:540px}
+  .hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;padding:13px 28px;border-radius:6px;
+    font-weight:700;font-size:16px;cursor:pointer;border:none;transition:transform .15s, background .2s, opacity .2s;
+  }
+  .btn:active{transform:scale(.96)}
+  .btn.play{background:#fff;color:#111}
+  .btn.play:hover{background:#e6e6e6}
+  .btn.list{background:rgba(109,109,110,.6);color:#fff}
+  .btn.list:hover{background:rgba(109,109,110,.4)}
+  .btn svg{width:20px;height:20px;fill:currentColor}
+
+  /* ============ ROWS ============ */
+  .billboard{margin-top:-70px;position:relative;z-index:5;padding:0 4% 40px;background:linear-gradient(to bottom, transparent, var(--bg) 40px)}
+  .row{margin:26px 0 34px}
+  .row-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;padding:0 4%}
+  .row-head h3{font-size:clamp(16px,2.3vw,21px);font-weight:700}
+  .row-head .see{font-size:11px;color:var(--gray);letter-spacing:1.5px;text-transform:uppercase;transition:color .2s;cursor:default}
+  .row-head .see:hover{color:#fff;text-decoration:underline}
+  .track{
+    display:flex;gap:10px;overflow-x:auto;padding:0 4% 12px;scroll-snap-type:x mandatory;
+    scroll-behavior:smooth;
+  }
+  .card{
+    flex:0 0 auto;width:clamp(150px,22vw,240px);scroll-snap-align:start;cursor:pointer;
+    transition:transform .25s ease;position:relative;
+  }
+  .card:hover{transform:scale(1.055);z-index:10}
+  .thumb{
+    position:relative;aspect-ratio:16/9;border-radius:6px;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;font-size:clamp(34px,5vw,52px);
+    border:1px solid rgba(255,255,255,.05);
+  }
+  .thumb .noise{position:absolute;inset:0;background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.12), transparent 60%)}
+  .thumb .corner{position:absolute;top:8px;left:8px;display:flex;gap:5px}
+  .thumb .ribbon{position:absolute;bottom:0;right:0;background:rgba(0,0,0,.65);color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:4px 0 0 0;backdrop-filter:blur(4px)}
+  .card h4{font-size:clamp(13px,1.6vw,15px);font-weight:600;margin-top:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .card .sub{font-size:12px;color:var(--gray);margin-top:3px}
+  .progress{height:3px;background:#3d3d3d;border-radius:2px;margin-top:8px;overflow:hidden}
+  .progress i{display:block;height:100%;background:var(--red);border-radius:2px}
+  .card.t10 .thumb::before{
+    content:'10';position:absolute;left:-6px;top:-4px;font-family:var(--font-display);
+    font-size:64px;color:#8a8a8a;opacity:.85;transform:rotate(-8deg);z-index:1;
+  }
+  .card.t10{width:clamp(110px,15vw,170px)}
+  .card.t10 h4{display:none}
+  .card.t10 .sub{display:none}
+  .card.t10 .thumb{aspect-ratio:2/3;border-radius:8px;font-size:clamp(24px,3.6vw,38px)}
+
+  /* ============ FOOTER ============ */
+  footer{padding:40px 8% 60px;color:var(--gray);font-size:12px;border-top:1px solid #1f1f1f;background:var(--bg)}
+  .soc{display:flex;gap:16px;margin-bottom:18px}
+  .soc svg{width:20px;height:20px;fill:#fff;opacity:.85}
+  .soc svg:hover{opacity:1}
+  .fgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+  .fgrid div{cursor:default}
+  .fgrid div:hover{color:#fff;text-decoration:underline}
+  .copy{line-height:1.7;max-width:70ch;opacity:.75}
+  .copy b{color:var(--rose)}
+
+  /* ============ PLAYER MODAL ============ */
+  #player{
+    position:fixed;inset:0;z-index:200;background:#000;
+    display:none;flex-direction:column;
+  }
+  #player.on{display:flex}
+  .p-top{
+    position:absolute;top:0;left:0;right:0;z-index:5;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 26px;background:linear-gradient(to bottom, rgba(0,0,0,.9), transparent);
+  }
+  .p-top .logo{font-family:var(--font-display);font-size:18px;color:var(--red);letter-spacing:1px;text-transform:uppercase}
+  .p-top .logo small{color:var(--rose)}
+  .p-top .close{width:38px;height:38px;border-radius:50%;background:rgba(0,0,0,.65);border:none;color:#fff;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+  .p-top .close:hover{background:var(--red)}
+  .player-stage{flex:1;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .player-bg{
+    position:absolute;inset:0;
+    background:
+      radial-gradient(ellipse at 50% 30%, rgba(229,9,20,.22), transparent 60%),
+      linear-gradient(150deg,#1c0d10,#0d0d0d);
+  }
+  .player-bg .glow{position:absolute;font-size:clamp(90px,20vw,280px);opacity:.14;filter:blur(2px);animation:float 7s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+  .stage-inner{position:relative;text-align:center;padding:0 6%;width:100%;max-width:900px}
+  .stage-inner .ep-tag{font-size:12px;letter-spacing:3px;color:var(--rose);text-transform:uppercase;font-weight:700;margin-bottom:14px}
+  .stage-inner h2{font-family:var(--font-display);font-size:clamp(26px,5vw,52px);text-transform:uppercase;line-height:1.05;margin-bottom:20px}
+  .subtitle{
+    min-height:84px;display:flex;align-items:center;justify-content:center;
+    font-size:clamp(16px,2.6vw,24px);color:#fff;font-weight:500;
+    text-shadow:0 2px 14px rgba(0,0,0,.8);max-width:720px;margin:0 auto;
+  }
+  .subtitle .caret{display:inline-block;width:2px;height:1em;background:var(--red);margin-left:4px;animation:blink .8s step-end infinite;vertical-align:text-bottom}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+  .p-controls{
+    position:absolute;bottom:0;left:0;right:0;z-index:5;
+    padding:34px 26px 22px;background:linear-gradient(to top, rgba(0,0,0,.95), transparent);
+  }
+  .pbar{height:5px;background:rgba(255,255,255,.2);border-radius:3px;cursor:pointer;position:relative;margin-bottom:14px}
+  .pbar .fill{height:100%;background:var(--red);border-radius:3px;width:0%;position:relative}
+  .pbar .fill::after{content:'';position:absolute;right:-6px;top:50%;transform:translateY(-50%);width:12px;height:12px;border-radius:50%;background:var(--red)}
+  .pbtns{display:flex;align-items:center;gap:18px}
+  .pbtns button{background:none;border:none;color:#fff;cursor:pointer;padding:2px;transition:color .2s}
+  .pbtns button:hover{color:var(--rose)}
+  .pbtns svg{width:30px;height:30px;fill:currentColor}
+  .pbtns .time{font-size:13px;color:var(--gray);font-variant-numeric:tabular-nums}
+  .pbtns .right{margin-left:auto;display:flex;gap:16px;align-items:center}
+  .pbtns .right svg{width:24px;height:24px}
+  .ep-list{
+    position:absolute;right:22px;top:80px;z-index:6;width:300px;max-height:60vh;overflow-y:auto;
+    background:rgba(16,16,16,.92);border:1px solid #2a2a2a;border-radius:8px;backdrop-filter:blur(12px);
+    display:none;padding:10px;
+  }
+  .ep-list.on{display:block}
+  .ep-list h5{font-size:13px;color:var(--gray);padding:6px 10px 10px;letter-spacing:1px;text-transform:uppercase}
+  .ep-item{padding:10px;border-radius:6px;cursor:pointer;transition:background .15s;display:flex;gap:10px;align-items:center}
+  .ep-item:hover{background:#262626}
+  .ep-item.now{background:rgba(229,9,20,.18)}
+  .ep-item .num{font-family:var(--font-display);font-size:13px;color:var(--rose);width:26px;flex-shrink:0}
+  .ep-item .txt{font-size:13px}
+  .ep-item .txt .t{font-weight:600;display:block}
+  .ep-item .txt .d{color:var(--gray);font-size:12px}
+  .ep-item .playic{font-size:12px;color:var(--red);margin-left:auto;flex-shrink:0}
+
+  .skip-intro{
+    position:absolute;right:6%;bottom:110px;z-index:6;
+    background:rgba(229,9,20,.92);border:none;color:#fff;font-weight:700;font-size:14px;
+    padding:10px 16px;border-radius:4px;cursor:pointer;display:none;opacity:0;
+    transition:opacity .3s;
+  }
+  .skip-intro.show{display:block;opacity:1}
+  .skip-intro:hover{background:var(--red)}
+
+  .toast{
+    position:fixed;bottom:30px;left:50%;transform:translate(-50%,20px);z-index:300;
+    background:#fff;color:#111;font-weight:600;font-size:14px;padding:12px 22px;border-radius:6px;
+    opacity:0;pointer-events:none;transition:all .3s;
+  }
+  .toast.on{opacity:1;transform:translate(-50%,0)}
+
+  @media (max-width:720px){
+    nav.tabs a:not(.active){display:none}
+    .fgrid{grid-template-columns:repeat(2,1fr)}
+    .ep-list{width:calc(100% - 24px);right:12px}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001s !important;transition-duration:.001s !important}
+  }
+  .focusable:focus-visible{outline:2px solid var(--rose);outline-offset:2px}
+</style>
+</head>
+<body>
+
+<!-- ============ PROFILES ============ -->
+<div id="profiles">
+  <div class="brand">CINELOVE<span>⁺</span></div>
+  <h2>Siapa yang nonton?</h2>
+  <div class="profile-row">
+    <div class="profile-card focusable" tabindex="0" data-enter="1">
+      <div class="profile-avatar" style="background:linear-gradient(135deg,#2b1e3f,#6d28d9)">🫘</div>
+      <p>Zuzu</p>
+    </div>
+    <div class="profile-card focusable" tabindex="0" data-enter="1">
+      <div class="profile-avatar" style="background:linear-gradient(135deg,#ffdbe4,#ff6b81)">🌸</div>
+      <p>Chanteii</p>
+    </div>
+  </div>
+  <div class="edit" style="border:1px solid #3d3d3d;padding:8px 18px;border-radius:4px;cursor:default">Kelola Profil</div>
+</div>
+
+<!-- ============ NAV ============ -->
+<header id="nav">
+  <div class="logo">
+    <div class="mark">▶</div>
+    <div class="word">CINELOVE<small>⁺</small></div>
+  </div>
+  <nav class="tabs">
+    <a href="#" class="active">Beranda</a>
+    <a href="#">Serial</a>
+    <a href="#">Film</a>
+    <a href="#">Baru &amp; Populer</a>
+    <a href="#">Daftar Saya</a>
+  </nav>
+  <div class="nav-right">
+    <span class="icon focusable" tabindex="0" title="Cari" style="cursor:pointer">🔍</span>
+    <span class="icon focusable" tabindex="0" title="Notifikasi" style="cursor:pointer">🔔</span>
+    <div class="mini-ava" title="Profil" style="background:linear-gradient(135deg,#ffdbe4,#ff6b81)">🌸</div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-inner">
+    <div class="hero-tag"><span class="pulse"></span> CINELOVE ORIGINAL — TOP 1 DI HATI KAMU</div>
+    <h1>CINTA <span class="rose">KITA</span><br><span class="red">THE SERIES</span></h1>
+    <div class="meta">
+      <span class="badge">16+</span>
+      <span>10 Episode</span>
+      <span class="badge muted">HD</span>
+      <span class="badge muted">Bucin</span>
+      <span>2026</span>
+    </div>
+    <p class="desc">10 episode. 10 alasan aku milih kamu. Serial orisinal paling banyak ditonton — bukan cuma di CINELOVE⁺, tapi juga di replay kepala aku setiap malam.</p>
+    <div class="hero-cta">
+      <button class="btn play focusable" data-play="Hero: Cinta Kita">▶ Putar</button>
+      <button class="btn list focusable" data-add="Cinta Kita — The Series">＋ Daftar Saya</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ROWS ============ -->
+<main class="billboard">
+
+  <div class="row">
+    <div class="row-head"><h3>Lanjut Nonton Untuk <b style="color:var(--rose)">Chanteii</b></h3><span class="see">Lihat Semua</span></div>
+    <div class="track">
+      <div class="card focusable" tabindex="0" data-play="Episode 4: Ketemu Lagi">
+        <div class="thumb" style="background:linear-gradient(135deg,#3d0a0e,#e50914)">💌<span class="noise"></span><span class="ribbon">E4 · 08:32</span><div class="corner"><span class="badge">Lanjut</span></div></div>
+        <h4>Chat Malam Minggu</h4><div class="sub">S01 · Episode 4</div>
+        <div class="progress"><i style="width:72%"></i></div>
+      </div>
+      <div class="card focusable" tabindex="0" data-play="Film: 3 Tahun Bersama">
+        <div class="thumb" style="background:linear-gradient(135deg,#1e1b3a,#8b5cf6)">🎬<span class="noise"></span><span class="ribbon">1j 24m</span><div class="corner"><span class="badge muted">Film</span></div></div>
+        <h4>Kita dan Waktu</h4><div class="sub">Film dokumenter cinta</div>
+        <div class="progress"><i style="width:45%"></i></div>
+      </div>
+      <div class="card focusable" tabindex="0" data-play="Specials: Jalan-Jalan">
+        <div class="thumb" style="background:linear-gradient(135deg,#0f2b1d,#10b981)">🌴<span class="noise"></span><span class="ribbon">24m</span><div class="corner"><span class="badge">Baru</span></div></div>
+        <h4>Jalan-Jalan &amp; Jajan</h4><div class="sub">Spesial liburan kita</div>
+        <div class="progress"><i style="width:12%"></i></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-head"><h3>Trending Sekarang</h3><span class="see">Lihat Semua</span></div>
+    <div class="track">
+      <div class="card t10 focusable" tabindex="0" data-play="Top 10: 1">
+        <div class="thumb" style="background:linear-gradient(135deg,#33090c,#ff2d3b)">😳<span class="noise"></span></div>
+      </div>
+      <div class="card t10 focusable" tabindex="0" data-play="Top 10: 2">
+        <div class="thumb" style="background:linear-gradient(135deg,#2b0f2e,#d946ef)">😭<span class="noise"></span></div>
+      </div>
+      <div class="card t10 focusable" tabindex="0" data-play="Top 10: 3">
+        <div class="thumb" style="background:linear-gradient(135deg,#10233e,#2563eb)">🥰<span class="noise"></span></div>
+      </div>
+      <div class="card t10 focusable" tabindex="0" data-play="Top 10: 4">
+        <div class="thumb" style="background:linear-gradient(135deg,#1f1710,#f59e0b)">☕<span class="noise"></span></div>
+      </div>
+      <div class="card t10 focusable" tabindex="0" data-play="Top 10: 5">
+        <div class="thumb" style="background:linear-gradient(135deg,#141414,#525252)">🖤<span class="noise"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-head"><h3>Karena Kamu Nonton <b style="color:var(--rose)">"Chat Malam Minggu"</b></h3><span class="see">Lihat Semua</span></div>
+    <div class="track">
+      <div class="card focusable" tabindex="0" data-play="Rekomendasi: Pelukan">
+        <div class="thumb" style="background:linear-gradient(135deg,#2d0f18,#f43f5e)">🤗<span class="noise"></span><span class="ribbon">S01 · E5</span></div>
+        <h4>Pelukan di Tengah Hujan</h4><div class="sub">Komedi romantis</div>
+      </div>
+      <div class="card focusable" tabindex="0" data-play="Rekomendasi: Mie">
+        <div class="thumb" style="background:linear-gradient(135deg,#261a08,#eab308)">🍜<span class="noise"></span><span class="ribbon">S01 · E7</span></div>
+        <h4>Mie Gacoan Kita Berdua</h4><div class="sub">Fakta ilmiah (drama)</div>
+      </div>
+      <div class="card focusable" tabindex="0" data-play="Rekomendasi: Rumah">
+        <div class="thumb" style="background:linear-gradient(135deg,#14213d,#6ee7b7)">🏡<span class="noise"></span><span class="ribbon">S02 · E1</span></div>
+        <h4>Rumah Impian (Masih Mimpi)</h4><div class="sub">Realita + fantasi</div>
+      </div>
+      <div class="card focusable" tabindex="0" data-play="Rekomendasi: Cemburu">
+        <div class="thumb" style="background:linear-gradient(135deg,#1a1033,#a855f7)">😤<span class="noise"></span><span class="ribbon">S01 · E9</span></div>
+        <h4>Cemburu Buta (Aku)</h4><div class="sub">Thriller psikologis</div>
+      </div>
+      <div class="card focusable" tabindex="0" data-play="Rekomendasi: Maaf">
+        <div class="thumb" style="background:linear-gradient(135deg,#0c2b22,#34d399)">🤝<span class="noise"></span><span class="ribbon">S01 · E10</span></div>
+        <h4>Maaf dan Pelukan Panjang</h4><div class="sub">Season finale</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-head"><h3>Serial Orisinal CINELOVE⁺</h3><span class="see">Lihat Semua</span></div>
+    <div class="track">
+      <div class="card focusable" tabindex="0" data-play="Original: Good Morning">
+        <div class="thumb" style="background:linear-gradient(135deg,#3a0d1e,#fb7185)">🌅<span class="noise"></span><span class="ribbon">Setiap Hari</span><div class="corner"><span class="badge">Baru</span></div></div>
+        <h4>Good Morning Message</h4><div class="sub">Serial rutin, 365 episode</div>
+      </div>
+      <div class="card focusable" tabindex="0" data-play="Original: Spotify">
+        <div class="thumb" style="background:linear-gradient(135deg,#0a2a22,#22d3ee)">🎧<span class="noise"></span><span class="ribbon">Playlist</span></div>
+        <h4>Lagu Pengantar Tidur</h4><div class="sub">Dibawakan Spotify</div>
+      </div>
+      <div class="card focusable" tabindex="0" data-play="Original: Kucing">
+        <div class="thumb" style="background:linear-gradient(135deg,#212121,#facc15)">🐱<span class="noise"></span><span class="ribbon">HD</span></div>
+        <h4>Cowo &amp; Kucing</h4><div class="sub">Dokumenter alam liar</div>
+      </div>
+      <div class="card focusable" tabindex="0" data-play="Original: Kontes">
+        <div class="thumb" style="background:linear-gradient(135deg,#2c1230,#e879f9)">🏆<span class="noise"></span><span class="ribbon">S01</span></div>
+        <h4>Kontes Cinta Sejati</h4><div class="sub">Aku menang, kamu jurinya</div>
+      </div>
+      <div class="card focusable" tabindex="0" data-play="Original: Makan">
+        <div class="thumb" style="background:linear-gradient(135deg,#331c08,#fb923c)">🍽️<span class="noise"></span><span class="ribbon">S03</span></div>
+        <h4>Makanan Kesukaanmu</h4><div class="sub">Cooking show, chef-nya aku</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="soc">
+    <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
+    <svg viewBox="0 0 24 24"><path d="M18.24 2.25h3.31l-7.23 8.26L23 21.75h-6.66l-5.22-6.82-5.97 6.82H1.84l7.73-8.84L1 2.25h6.83l4.71 6.23 5.7-6.23zm-1.16 17.52h1.83L7.08 4.13H5.12l11.96 15.64z"/></svg>
+    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+  </div>
+  <div class="fgrid">
+    <div>Audio &amp; Subtitel</div><div>Pusat Bantuan</div><div>Kartu Hadiah</div><div>Pusat Media</div>
+    <div>Kondisi Penggunaan</div><div>Privasi</div><div>Preferensi Cookie</div><div>Hubungi Kami</div>
+  </div>
+  <div class="copy">
+    CINELOVE⁺ adalah platform streaming fiktif untuk satu penonton setia: <b>Chanteii</b>.
+    Semua konten orisinal diproduksi oleh <b>Zuzu</b>, disutradarai oleh hati, dan dibintangi oleh kita berdua.
+    Tidak ada langganan bulanan — cukup satu orang, selamanya. 🌸
+  </div>
+</footer>
+
+<!-- ============ PLAYER ============ -->
+<div id="player">
+  <div class="p-top">
+    <div class="logo">CINELOVE<small>⁺</small></div>
+    <button class="close focusable" aria-label="Tutup">&times;</button>
+  </div>
+
+  <div class="ep-list" id="epList">
+    <h5>Episode Cinta Kita</h5>
+    <div class="ep-item now" data-ep="0"><span class="num">01</span><span class="txt"><span class="t">Awal Kita</span><span class="d">Bagaimana semua bermula</span></span><span class="playic">▶</span></div>
+    <div class="ep-item" data-ep="1"><span class="num">02</span><span class="txt"><span class="t">Chat Pertama</span><span class="d">Semua butuh kalimat pembuka</span></span></div>
+    <div class="ep-item" data-ep="2"><span class="num">03</span><span class="txt"><span class="t">Kamu Lucu</span><span class="d">Penelitian mendalam, hasil tetap sama</span></span></div>
+    <div class="ep-item" data-ep="3"><span class="num">04</span><span class="txt"><span class="t">Jatuh Cinta</span><span class="d">Plot twist terbaik</span></span></div>
+    <div class="ep-item" data-ep="4"><span class="num">05</span><span class="txt"><span class="t">Hari-Hari Kita</span><span class="d">Episode favorit penonton</span></span></div>
+    <div class="ep-item" data-ep="5"><span class="num">06</span><span class="txt"><span class="t">Kita vs Masalah</span><span class="d">Konflik, tapi tim kita solid</span></span></div>
+    <div class="ep-item" data-ep="6"><span class="num">07</span><span class="txt"><span class="t">Pelukan</span><span class="d">Obat segala episode buruk</span></span></div>
+    <div class="ep-item" data-ep="7"><span class="num">08</span><span class="txt"><span class="t">Masa Depan</span><span class="d">Spoiler: kita bahagia</span></span></div>
+    <div class="ep-item" data-ep="8"><span class="num">09</span><span class="txt"><span class="t">Selamanya</span><span class="d">Tanpa tombol berhenti</span></span></div>
+    <div class="ep-item" data-ep="9"><span class="num">10</span><span class="txt"><span class="t">Kamu &amp; Aku</span><span class="d">Season finale, tapi belum tamat</span></span></div>
+  </div>
+
+  <div class="player-stage">
+    <div class="player-bg"><span class="glow">💖</span></div>
+    <div class="stage-inner">
+      <div class="ep-tag" id="epTag">S01 · E01 — "Awal Kita"</div>
+      <h2 id="playerTitle">CINTA KITA</h2>
+      <div class="subtitle" id="subtitle"><span id="subText"></span><span class="caret"></span></div>
+    </div>
+  </div>
+
+  <button class="skip-intro focusable" id="skipBtn">Lewati Intro</button>
+
+  <div class="p-controls">
+    <div class="pbar" id="pbar"><div class="fill" id="pfill"></div></div>
+    <div class="pbtns">
+      <button id="playPause" class="focusable" aria-label="Putar/Jeda">
+        <svg id="icPause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+        <svg id="icPlay" viewBox="0 0 24 24" style="display:none"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <button id="nextEp" class="focusable" aria-label="Episode berikutnya">
+        <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+      </button>
+      <span class="time" id="time">00:00 / 10:00</span>
+      <div class="right">
+        <button class="focusable" id="volBtn" aria-label="Volume">
+          <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+        </button>
+        <button class="focusable" id="epBtn" aria-label="Episode">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V6h16v12z"/><path d="M7 12h10v2H7z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  'use strict';
+  var profiles = document.getElementById('profiles');
+  var enterBtns = document.querySelectorAll('[data-enter]');
+  var header = document.getElementById('nav');
+  var player = document.getElementById('player');
+  var toast = document.getElementById('toast');
+
+  var EPISODES = [
+    {title:'Awal Kita', lines:[
+      'Banyak orang bilang, cinta itu rumit.',
+      'Tapi aku? Aku cuma butuh satu alasan: kamu.',
+      'Dari dulu sampai sekarang, tombol replay-nya gak pernah mati.'
+    ]},
+    {title:'Chat Pertama', lines:[
+      'Semua butuh kalimat pembuka.',
+      'Beruntungnya aku, kalimat pembukaku dijawab sama yang paling lucu dan paling baik hati.',
+      'Sejak itu, chat kita gak pernah ada ujungnya.'
+    ]},
+    {title:'Kamu Lucu', lines:[
+      'Aku sudah riset panjang. Sampelnya ratusan hari.',
+      'Kesimpulannya tetap: kamu lucu.',
+      'Dan riset ini bakalan jalan terus, sampai bosan — yang gak akan pernah terjadi.'
+    ]},
+    {title:'Jatuh Cinta', lines:[
+      'Kamu tau plot twist paling ngena?',
+      'Bukan pas aku sadar aku sayang kamu.',
+      'Tapi pas aku sadar, kamu juga milih aku. Di situ aku menang semua.'
+    ]},
+    {title:'Hari-Hari Kita', lines:[
+      'Episode favorit penonton: hari biasa.',
+      'Sarapan, chat iseng, ketawa receh, tiba-tiba udah malam.',
+      'Rasanya biasa aja. Tapi gak ada yang mau ganti dengan yang lain.'
+    ]},
+    {title:'Kita vs Masalah', lines:[
+      'Semua cerita butuh konflik biar menarik.',
+      'Tapi tim kita solid: aku, kamu, dan komunikasi.',
+      'Jadi apapun episode buruknya, kita selalu lanjut nonton bareng.'
+    ]},
+    {title:'Pelukan', lines:[
+      'Obat segala episode buruk: satu pelukan.',
+      'Fakta ilmiah, udah aku verifikasi sendiri.',
+      'Side effect: pengen peluk terus.'
+    ]},
+    {title:'Masa Depan', lines:[
+      'Spoiler alert: kita bahagia.',
+      'Rumah kecil, kopi sore, dan kamu di sebelahku.',
+      'Rating penonton: belum ada yang sepadan.'
+    ]},
+    {title:'Selamanya', lines:[
+      'Aplikasi streaming punya tombol berhenti.',
+      'Aku sama kamu enggak.',
+      'Endless mode: on. Selamanya.'
+    ]},
+    {title:'Kamu & Aku', lines:[
+      'Ini season finale. Tapi ceritanya belum tamat.',
+      'Karena aku mau lanjut nonton sama kamu, sampai episode terakhir hidupku.',
+      'Thanks for watching. Aku sayang kamu. 🌸'
+    ]}
+  ];
+  var epIdx = 0, playing = true, prog = 0, typing = false;
+  var subtitle = document.getElementById('subtitle');
+  var subText = document.getElementById('subText');
+  var epTag = document.getElementById('epTag');
+  var pfill = document.getElementById('pfill');
+  var timeEl = document.getElementById('time');
+  var skipBtn = document.getElementById('skipBtn');
+
+  /* ---------- PROFILES ---------- */
+  function enter(){ profiles.classList.add('hidden'); document.body.style.overflow=''; }
+  enterBtns.forEach(function(b){ b.addEventListener('click', enter); b.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){e.preventDefault();enter();} }); });
+
+  /* ---------- NAV ---------- */
+  window.addEventListener('scroll', function(){ header.classList.toggle('solid', window.scrollY > 40); });
+  document.querySelector('.logo').addEventListener('click', function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+
+  /* ---------- CARD CLICK & HERO PLAY ---------- */
+  function openPlayer(label){
+    player.classList.add('on');
+    document.body.style.overflow='hidden';
+    epIdx = 0; prog = 0; playing = true;
+    updateEp(true);
+    showToast('Memutar: '+label);
+  }
+  document.querySelectorAll('[data-play]').forEach(function(c){
+    c.addEventListener('click', function(){ openPlayer(c.getAttribute('data-play')); });
+    c.addEventListener('keydown', function(e){ if(e.key==='Enter'){ openPlayer(c.getAttribute('data-play')); } });
+  });
+  document.querySelectorAll('[data-add]').forEach(function(c){
+    c.addEventListener('click', function(){ showToast('＋ Ditambahkan ke Daftar Saya: '+c.getAttribute('data-add')); });
+  });
+
+  /* ---------- PLAYER ---------- */
+  var CLOSE = player.querySelector('.close');
+  CLOSE.addEventListener('click', function(){ player.classList.remove('on'); document.body.style.overflow=''; stopTyping(); });
+
+  var playPause = document.getElementById('playPause');
+  var icPause = document.getElementById('icPause'), icPlay = document.getElementById('icPlay');
+  playPause.addEventListener('click', function(){
+    playing = !playing;
+    icPause.style.display = playing?'':'none';
+    icPlay.style.display = playing?'none':'';
+  });
+
+  document.getElementById('nextEp').addEventListener('click', nextEp);
+  document.getElementById('epBtn').addEventListener('click', function(){
+    document.getElementById('epList').classList.toggle('on');
+  });
+  document.querySelectorAll('.ep-item').forEach(function(it){
+    it.addEventListener('click', function(){
+      epIdx = parseInt(it.getAttribute('data-ep'),10); prog = 0; playing = true;
+      updateEp(true);
+      document.getElementById('epList').classList.remove('on');
+    });
+  });
+  document.getElementById('pbar').addEventListener('click', function(e){
+    var r = this.getBoundingClientRect();
+    prog = Math.min(0.92, Math.max(0, (e.clientX - r.left)/r.width));
+    if(prog > 0.4 && !skipBtn.classList.contains('show')) skipBtn.classList.add('show');
+  });
+  skipBtn.addEventListener('click', function(){ prog = 0.45; skipBtn.classList.remove('show'); updateSub(); });
+
+  function nextEp(){
+    epIdx = (epIdx + 1) % EPISODES.length; prog = 0; playing = true;
+    updateEp(true);
+    showToast('▶ Episode '+String(epIdx+1).padStart(2,'0')+' — '+EPISODES[epIdx].title);
+  }
+
+  function stopTyping(){ typing = false; }
+  function updateEp(reset){
+    var ep = EPISODES[epIdx];
+    epTag.textContent = 'S01 · E'+String(epIdx+1).padStart(2,'0')+' — "'+ep.title+'"';
+    document.querySelectorAll('.ep-item').forEach(function(it){
+      it.classList.toggle('now', parseInt(it.getAttribute('data-ep'),10)===epIdx);
+    });
+    if(reset) updateSub();
+  }
+  function typeLine(line, cb){
+    typing = true;
+    var i = 0;
+    subText.textContent = '';
+    (function tick(){
+      if(!typing) return;
+      subText.textContent = line.slice(0, i);
+      i++;
+      if(i <= line.length) setTimeout(tick, 28);
+      else setTimeout(cb, 1600);
+    })();
+  }
+  function updateSub(){
+    var ep = EPISODES[epIdx];
+    var li = Math.min(ep.lines.length-1, Math.floor(prog / 0.3));
+    if(prog === 0) subText.textContent = ep.lines[0];
+    var self = 0;
+    (function playLine(){
+      if(!playing){ setTimeout(playLine, 200); return; }
+      typeLine(ep.lines[li], function(){
+        if(!playing) return;
+        if(li < ep.lines.length-1){
+          li++;
+          if(prog < (li)*0.3) prog = li*0.3;
+          playLine();
+        } else {
+          /* episode selesai -> auto next */
+          if(epIdx < EPISODES.length-1){ nextEp(); } else { endBinge(); }
+        }
+      });
+    })();
+  }
+
+  var ended = false;
+  function endBinge(){
+    showToast('🌸 Season selesai. Kamu tetap juara.');
+  }
+
+  /* ---------- PROGRESS CLOCK ---------- */
+  setInterval(function(){
+    if(!player.classList.contains('on')) return;
+    if(playing && !typing){
+      prog += 0.0006;
+      if(prog > 0.92 && !skipBtn.classList.contains('show')) skipBtn.classList.add('show');
+      if(prog >= 1){ prog = 0; }
+      pfill.style.width = (prog*100)+'%';
+      var t = Math.floor(prog*600), m = Math.floor(t/60), s = Math.floor(t%60);
+      timeEl.textContent = String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')+' / 10:00';
+    }
+  }, 50);
+
+  /* ---------- TOAST ---------- */
+  var toastTimer;
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add('on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toast.classList.remove('on'); }, 2200);
+  }
+
+  /* ---------- TABS: noop redirect to toast ---------- */
+  document.querySelectorAll('nav.tabs a').forEach(function(a){
+    a.addEventListener('click', function(e){ e.preventDefault(); showToast('🗂️ '+a.textContent+' — semua ada di hati aku. 🫶'); if(!a.classList.contains('active')){ document.querySelector('nav.tabs a.active').classList.remove('active'); a.classList.add('active'); } });
+  });
+  document.querySelector('.nav-right .icon[title="Cari"]').addEventListener('click', function(){ showToast('🔍 Pencarian: ketik nama kamu, hasilnya selalu ada.'); });
+  document.querySelector('.nav-right .icon[title="Notifikasi"]').addEventListener('click', function(){ showToast('🔔 1 notifikasi: aku sayang kamu (tiap detik).'); });
+  document.querySelector('.mini-ava').addEventListener('click', function(){ showToast('🌸 Profil: Chanteii — mode tanpa berhenti.'); });
+  document.querySelector('.billboard .row-head .see').addEventListener('click', function(){ showToast('👀 Semua konten cuma buat kamu.'); });
+})();
+</script>
+</body>
+</html>
