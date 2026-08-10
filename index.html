@@ -625,7 +625,10 @@
     showToast('▶ Episode '+String(epIdx+1).padStart(2,'0')+' — '+EPISODES[epIdx].title);
   }
 
-  function stopTyping(){ typing = false; }
+  var typeToken = 0; /* cancel token — increment to kill in-flight typeLine */
+
+  function stopTyping(){ typeToken++; typing = false; }
+
   function updateEp(reset){
     var ep = EPISODES[epIdx];
     epTag.textContent = 'S01 · E'+String(epIdx+1).padStart(2,'0')+' — "'+ep.title+'"';
@@ -634,34 +637,45 @@
     });
     if(reset) updateSub();
   }
+
   function typeLine(line, cb){
+    typeToken++;              /* cancel any previous run */
+    var myToken = typeToken;
     typing = true;
     var i = 0;
     subText.textContent = '';
     (function tick(){
-      if(!typing) return;
+      if(typeToken !== myToken) return; /* stale — bail */
       subText.textContent = line.slice(0, i);
       i++;
-      if(i <= line.length) setTimeout(tick, 28);
-      else setTimeout(cb, 1600);
+      if(i <= line.length){
+        setTimeout(tick, 28);
+      } else {
+        typing = false;
+        setTimeout(function(){ if(typeToken === myToken) cb(); }, 1600);
+      }
     })();
   }
+
   function updateSub(){
+    stopTyping();             /* kill any in-flight typewriter */
     var ep = EPISODES[epIdx];
-    var li = Math.min(ep.lines.length-1, Math.floor(prog / 0.3));
-    if(prog === 0) subText.textContent = ep.lines[0];
-    var self = 0;
+    var li = Math.min(ep.lines.length - 1, Math.floor(prog / 0.3));
+    var myToken = typeToken;
+
     (function playLine(){
+      if(typeToken !== myToken) return; /* cancelled */
       if(!playing){ setTimeout(playLine, 200); return; }
       typeLine(ep.lines[li], function(){
-        if(!playing) return;
-        if(li < ep.lines.length-1){
+        if(typeToken !== myToken) return;
+        if(!playing){ setTimeout(playLine, 200); return; }
+        if(li < ep.lines.length - 1){
           li++;
-          if(prog < (li)*0.3) prog = li*0.3;
+          if(prog < li * 0.3) prog = li * 0.3;
           playLine();
         } else {
           /* episode selesai -> auto next */
-          if(epIdx < EPISODES.length-1){ nextEp(); } else { endBinge(); }
+          if(epIdx < EPISODES.length - 1){ nextEp(); } else { endBinge(); }
         }
       });
     })();
