@@ -598,26 +598,34 @@
   document.querySelector('.logo').addEventListener('click', function(){ window.scrollTo({top:0,behavior:'smooth'}); });
 
   /* ---------- CARD CLICK & HERO PLAY ---------- */
+  var currentYtId = null;
+
   function openPlayer(label, ytId){
     player.classList.add('on');
     document.body.style.overflow='hidden';
-    var ytPlayer = document.getElementById('ytPlayer');
+    currentYtId = ytId || null;
+    
     if(ytId){
-      /* Custom video mode: langsung play video ini */
+      /* Custom video mode (film/spesial/rekomendasi) */
+      stopTyping();
       document.getElementById('epList').classList.remove('on');
       document.getElementById('playerTitle').textContent = label;
       document.getElementById('epTag').textContent = label;
-      subText.textContent = '';
-      typing = false;
-      ytPlayer.src = 'https://www.youtube-nocookie.com/embed/' + ytId +
-        '?autoplay=1&controls=0&loop=1&playsinline=1&playlist=' + ytId +
-        '&start=0';
-      showToast('Memutar: '+label);
+      subText.textContent = 'Memutar video spesial: ' + label;
+      
+      var ytPlayer = document.getElementById('ytPlayer');
+      if(ytPlayer){
+        ytPlayer.src = 'https://www.youtube-nocookie.com/embed/' + ytId +
+          '?autoplay=1&mute=0&controls=0&loop=1&playsinline=1&playlist=' + ytId;
+      }
+      showToast('Memutar: ' + label);
       return;
     }
+    
+    /* Series mode: mulai dari epIdx = 0 */
     epIdx = 0; prog = 0; playing = true;
     updateEp(true);
-    showToast('Memutar: '+label);
+    showToast('Memutar: ' + label);
   }
   document.querySelectorAll('[data-play]').forEach(function(c){
     c.addEventListener('click', function(){ openPlayer(c.getAttribute('data-play'), c.getAttribute('data-yt')); });
@@ -668,8 +676,11 @@
   function stopTyping(){ typeToken++; typing = false; }
 
   function updateEp(reset){
+    stopTyping();
     var ep = EPISODES[epIdx];
     epTag.textContent = 'S01 · E'+String(epIdx+1).padStart(2,'0')+' — "'+ep.title+'"';
+    document.getElementById('playerTitle').textContent = ep.title;
+    
     var ytPlayer = document.getElementById('ytPlayer');
     if (ytPlayer && ep.ytId) {
       ytPlayer.src = 'https://www.youtube-nocookie.com/embed/' + ep.ytId + '?autoplay=1&mute=0&controls=0&loop=1&playsinline=1&playlist=' + ep.ytId;
